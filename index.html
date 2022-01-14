@@ -23,27 +23,28 @@
 
         .gris {
             background-color: gainsboro;
-        }
+        } 
+        #message{color:red}
     </style>
 </head>
 
 <body>
-    <h1>Wordle</h1>
+    <h1>Wordle</h1> 
+        <p id="message">&nbsp;</p> 
     <form action="index.html">
         <fieldset>
-            <p><button type="button" id="btnPiger">Piger un mot!</button></p>
+            <legend>Étape 1 - Piger un mot! </legend>
+            <p><button type="button" id="btnJouer">Jouer</button></p>
         </fieldset>
         <fieldset>
+            <legend>Étape 2 - Zone d'essais</legend>
+            <p>Essai numéro <span id="nombreEssai">0</span></p>
             <p>
                 <label for="champMot">Entrer un mot</label>
                 <input id="champMot" name="champMot" type="text">
-                <button type="button" id="btnJouer">Jouer</button>
-            </p>
-            <p>
-                Essai numéro <span id="nombreEssai"> 0 </span>
-            </p>
-        </fieldset>
-
+                <button type="button" id="btnEvaluer">Évaluer</button>
+            </p> 
+        </fieldset> 
     </form>
     <section class="mastermind">
         <!-- (p.mot#mot$>span*5)*6 -->
@@ -54,19 +55,36 @@
         <p class="mot" id="mot5"><span></span><span></span><span></span><span></span><span></span></p>
         <p class="mot" id="mot6"><span></span><span></span><span></span><span></span><span></span></p>
     </section>
-    <script>
+    <script> 
         let wordle = {
+            arrMots:new Array("mambo", "tango", "revue", "ravin", "rival", "zumba", "souks", "wagon","avion", "fleur", "bisou", "bazou", "bebop", "bécot", "biche", "filin", "filet","filou","fluet","franc", "forêt", "habit", "grief", "gruau"),
             strMotHasard: null,
             intNombreEssai: 0,
             pigerMot: function () {
-                this.strMotHasard = "ravin";
+                let intNombreHasard = Math.floor(Math.random()*this.arrMots.length);
+                this.strMotHasard = this.arrMots[intNombreHasard];
                 console.log(this.strMotHasard);
+                // Vider (ou presque) le paragraphe de message; 
+                // l'espace insécable &nbsp; permet de conserver le display block de l'élément vide
+                document.getElementById("message").innerHTML = "&nbsp;";
+                // Effacer tous les essais du jeu précédent
+                let arrSpan = document.querySelectorAll(".mot span");
+                for(let intCpt=0; intCpt< arrSpan.length;intCpt++){
+                    arrSpan[intCpt].innerText = "";
+                }
             },
             evaluerMot: function (strMotAEvaluer) {
+                // réinitialiser le message et vider le champ de saisie
+                let strMessage = "&nbsp;";
+                document.getElementById("champMot").value = ""
+
                 if (strMotAEvaluer != "" && this.intNombreEssai < 6) {
                     this.intNombreEssai += 1;
+                    // Mettre à jour le témoin
+                    document.getElementById("nombreEssai").innerText = this.intNombreEssai;
+                    // boucler sur le mot à évaluer pour examiner chaque lettre
                     for (let intCpt = 0; intCpt < strMotAEvaluer.length; intCpt++) {
-                        console.log(`#mot${this.intNombreEssai} > span:nth-of-type(${intCpt+1})`);
+                        // console.log(`#mot${this.intNombreEssai} > span:nth-of-type(${intCpt+1})`);
                         let tagSpan = document.querySelector(
                             `#mot${this.intNombreEssai} > span:nth-of-type(${intCpt+1})`);
                         let strLettre = strMotAEvaluer.charAt(intCpt);
@@ -87,13 +105,24 @@
                         }
 
                     }
+                    // donner une rétroaction
+                    if (strMotAEvaluer == this.strMotHasard) {
+                        strMessage = "Bravo vous avez réussi!"
+                    } else {
+                        if (this.intNombreEssai == 6) {
+
+                            strMessage = "Hum, vous avez atteint la limite, mais vous pouvez rejouer!"
+                        }
+                    }
+                    document.getElementById("message").innerHTML = strMessage;
+
                 }
             }
         };
-        document.getElementById("btnPiger").addEventListener("click", function () {
+        document.getElementById("btnJouer").addEventListener("click", function () {
             wordle.pigerMot();
         })
-        document.getElementById("btnJouer").addEventListener("click", function () {
+        document.getElementById("btnEvaluer").addEventListener("click", function () {
             wordle.evaluerMot(document.getElementById("champMot").value);
         })
     </script>
