@@ -4,7 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Wordle version pour TIMCSF</title>
+    <style>
+        .mot span {
+            display: inline-block;
+            min-width: 1em;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .vert {
+            background-color: aquamarine;
+        }
+
+        .jaune {
+            background-color: cornsilk;
+        }
+
+        .gris {
+            background-color: gainsboro;
+        }
+    </style>
 </head>
 
 <body>
@@ -37,17 +57,35 @@
     <script>
         let wordle = {
             strMotHasard: null,
-            intNombreEssai:0,
-            pigerMot: function(){
+            intNombreEssai: 0,
+            pigerMot: function () {
                 this.strMotHasard = "ravin";
                 console.log(this.strMotHasard);
             },
             evaluerMot: function (strMotAEvaluer) {
-                if(strMotAEvaluer != "" && this.intNombreEssai < 6){ 
+                if (strMotAEvaluer != "" && this.intNombreEssai < 6) {
                     this.intNombreEssai += 1;
-                    for(let intCpt=0; intCpt < strMotAEvaluer.length; intCpt++){
+                    for (let intCpt = 0; intCpt < strMotAEvaluer.length; intCpt++) {
                         console.log(`#mot${this.intNombreEssai} > span:nth-of-type(${intCpt+1})`);
-                        document.querySelector(`#mot${this.intNombreEssai} > span:nth-of-type(${intCpt+1})`).innerText = strMotAEvaluer.charAt(intCpt);
+                        let tagSpan = document.querySelector(
+                            `#mot${this.intNombreEssai} > span:nth-of-type(${intCpt+1})`);
+                        let strLettre = strMotAEvaluer.charAt(intCpt);
+                        tagSpan.innerText = strLettre;
+                        // pour chaque lettre du mot vérifier si la lettre existe dans le mot
+                        // si elle est au bon endroit c'est vert
+                        // sinon c'est jaune
+                        // sinon c'est gris
+                        if (this.strMotHasard.indexOf(strLettre) != -1) {
+                            if (strMotAEvaluer.charAt(intCpt) == this.strMotHasard.charAt(intCpt)) {
+                                tagSpan.className = "vert";
+                            } else {
+                                tagSpan.className = "jaune";
+                            }
+                        } else {
+                            tagSpan.className = "gris";
+
+                        }
+
                     }
                 }
             }
