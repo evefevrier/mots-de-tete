@@ -1,0 +1,171 @@
+@charset "UTF-8";
+
+:root {
+    box-sizing: border-box;
+    --gris: rgb(187, 184, 184);
+    --gris-pale:rgb(237, 236, 236);
+} 
+
+.mot span {
+    display: inline-block;
+    min-width: 1em;
+    font-size: 2em;
+    text-align: center;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin-bottom: 1em;
+}
+
+dt,
+dd {
+    padding: 0.5em;
+}
+
+.vert {
+    background-color: rgb(144, 255, 149);
+}
+
+.vert+dd {
+    background-color: rgb(191, 252, 194);
+}
+
+.jaune {
+    background-color: rgb(255, 251, 131);
+}
+
+.jaune+dd {
+    background-color: rgb(255, 253, 188);
+}
+
+.gris {
+    background-color: var(--gris-pale);
+}
+
+.gris+dd {
+    background-color: rgb(242, 242, 242);
+}
+
+#message {
+    color: red;
+    border: 3px dashed var(--gris);
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+label[for='champMot'] {
+    display: block;
+}
+
+#champMot {
+    padding: 0.5em;
+    font-size: larger;
+}
+
+.animate.animate__pulse {
+    font-weight: bold;
+}
+
+.animate.animate__jello {
+    animation-iteration-count: infinite;
+}
+
+main {
+    display: flex; 
+    width: 90%;
+    margin: auto;
+} 
+.entrerUnMot p{
+    display: flex;  
+    justify-content: space-between;
+    align-items: center;
+}
+.mot {
+    display: flex;
+    margin: 0;
+}
+
+.mot span {
+    flex: 1 1 auto;
+}
+
+.mot span:empty {
+    background-color: seashell;
+}
+
+aside,
+form,
+.mastermind {
+    padding: 1em;
+}
+
+aside {
+    order: -1;
+    flex-basis: 30%
+}
+
+form {
+    flex-basis: 40%
+}
+
+.mastermind {
+    flex-basis: 30%
+}
+
+h1 {
+    font-family: 'Ribeye', cursive;
+    font-size: 10vw;
+    text-align: center;
+    font-stretch: extra-expanded;
+    margin: 0;
+}
+
+.boutons {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    margin-left: 0.5em;
+    border: none;
+    background-color: rgb(183, 225, 241);
+    padding: 0.65em;
+    border-radius: 3px;
+    transform: translate(-1px, -1px);
+    font-weight: bold;
+}
+
+button:not([disabled]):hover,
+button:not([disabled]):focus {
+    background-color: rgb(145, 222, 252);
+    /* font-size: 1.05em; */
+    transform: translate(2px, 2px);
+    transition: all 0.5s;
+}
+::marker{
+    color:var(--gris);
+    font-size: larger;
+    /* position: relative;
+    left:-1em; */
+}
+ol{
+    margin-left: -1.25em;
+}
+fieldset{
+    margin-bottom: 1em; 
+}
+fieldset,legend{
+    border:none;
+    background-color: var(--gris-pale);
+    border-radius: 5px; 
+}
+legend{
+    padding: .25em 1em;
+    position:relative;
+    top:-0.5em;
+}
+

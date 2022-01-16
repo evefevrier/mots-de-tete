@@ -5,127 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle version pour TIMCSF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ribeye&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="libs/animate.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        .mot span {
-            display: inline-block;
-            min-width: 1em;
-            font-size: 2em;
-            text-align: center;
-        }
-
-        .vert {
-            background-color: aquamarine;
-        }
-
-        .jaune {
-            background-color: cornsilk;
-        }
-
-        .gris {
-            background-color: gainsboro;
-        } 
-        #message{color:red}
+       
     </style>
 </head>
 
 <body>
-    <h1>Wordle</h1> 
-        <p id="message">&nbsp;</p> 
-    <form action="index.html">
-        <fieldset>
-            <legend>Étape 1 - Piger un mot! </legend>
-            <p><button type="button" id="btnJouer">Jouer</button></p>
-        </fieldset>
-        <fieldset>
-            <legend>Étape 2 - Zone d'essais</legend>
-            <p>Essai numéro <span id="nombreEssai">0</span></p>
-            <p>
-                <label for="champMot">Entrer un mot</label>
-                <input id="champMot" name="champMot" type="text">
-                <button type="button" id="btnEvaluer">Évaluer</button>
-            </p> 
-        </fieldset> 
-    </form>
-    <section class="mastermind">
-        <!-- (p.mot#mot$>span*5)*6 -->
-        <p class="mot" id="mot1"><span></span><span></span><span></span><span></span><span></span></p>
-        <p class="mot" id="mot2"><span></span><span></span><span></span><span></span><span></span></p>
-        <p class="mot" id="mot3"><span></span><span></span><span></span><span></span><span></span></p>
-        <p class="mot" id="mot4"><span></span><span></span><span></span><span></span><span></span></p>
-        <p class="mot" id="mot5"><span></span><span></span><span></span><span></span><span></span></p>
-        <p class="mot" id="mot6"><span></span><span></span><span></span><span></span><span></span></p>
-    </section>
-    <script> 
-        let wordle = {
-            arrMots:new Array("mambo", "tango", "revue", "ravin", "rival", "zumba", "souks", "wagon","avion", "fleur", "bisou", "bazou", "bebop", "bécot", "biche", "filin", "filet","filou","fluet","franc", "forêt", "habit", "grief", "gruau"),
-            strMotHasard: null,
-            intNombreEssai: 0,
-            pigerMot: function () {
-                let intNombreHasard = Math.floor(Math.random()*this.arrMots.length);
-                this.strMotHasard = this.arrMots[intNombreHasard];
-                console.log(this.strMotHasard);
-                // Vider (ou presque) le paragraphe de message; 
-                // l'espace insécable &nbsp; permet de conserver le display block de l'élément vide
-                document.getElementById("message").innerHTML = "&nbsp;";
-                // Effacer tous les essais du jeu précédent
-                let arrSpan = document.querySelectorAll(".mot span");
-                for(let intCpt=0; intCpt< arrSpan.length;intCpt++){
-                    arrSpan[intCpt].innerText = "";
-                }
-            },
-            evaluerMot: function (strMotAEvaluer) {
-                // réinitialiser le message et vider le champ de saisie
-                let strMessage = "&nbsp;";
-                document.getElementById("champMot").value = ""
+    <h1>Mots de tête&#8239;!</h1>
+    <main>
+        <form action="index.html">
+            <h2>Interface</h2>
+            <p id="message">&nbsp;</p>
+            <fieldset id="etape1">
+                <legend>Étape 1</legend>
+                <p id="consigne"> Vous avez 6 essais pour deviner (par déduction) le mot de 5 lettres.</p>
+                <p id="nombreEssai">&nbsp;</p>
+                <p class="boutons">
+                    <button type="button" id="btnReset" disabled>Rejouer</button>
 
-                if (strMotAEvaluer != "" && this.intNombreEssai < 6) {
-                    this.intNombreEssai += 1;
-                    // Mettre à jour le témoin
-                    document.getElementById("nombreEssai").innerText = this.intNombreEssai;
-                    // boucler sur le mot à évaluer pour examiner chaque lettre
-                    for (let intCpt = 0; intCpt < strMotAEvaluer.length; intCpt++) {
-                        // console.log(`#mot${this.intNombreEssai} > span:nth-of-type(${intCpt+1})`);
-                        let tagSpan = document.querySelector(
-                            `#mot${this.intNombreEssai} > span:nth-of-type(${intCpt+1})`);
-                        let strLettre = strMotAEvaluer.charAt(intCpt);
-                        tagSpan.innerText = strLettre;
-                        // pour chaque lettre du mot vérifier si la lettre existe dans le mot
-                        // si elle est au bon endroit c'est vert
-                        // sinon c'est jaune
-                        // sinon c'est gris
-                        if (this.strMotHasard.indexOf(strLettre) != -1) {
-                            if (strMotAEvaluer.charAt(intCpt) == this.strMotHasard.charAt(intCpt)) {
-                                tagSpan.className = "vert";
-                            } else {
-                                tagSpan.className = "jaune";
-                            }
-                        } else {
-                            tagSpan.className = "gris";
+                    <button type="button" id="btnJouer">Piger un mot!</button>
+                </p>
+            </fieldset>
+            <fieldset id="etape2" hidden>
+                <legend>Étape 2</legend>
+                <div class="entrerUnMot">
+                    <label for="champMot">Entrer un mot de <strong>5</strong> lettres</label>
+                    <p>
+                        <input id="champMot" name="champMot" type="text" maxlength="5">
+                        <button type="button" id="btnEvaluer">Évaluer</button>
+                    </p>
+                </div>
 
-                        }
-
-                    }
-                    // donner une rétroaction
-                    if (strMotAEvaluer == this.strMotHasard) {
-                        strMessage = "Bravo vous avez réussi!"
-                    } else {
-                        if (this.intNombreEssai == 6) {
-
-                            strMessage = "Hum, vous avez atteint la limite, mais vous pouvez rejouer!"
-                        }
-                    }
-                    document.getElementById("message").innerHTML = strMessage;
-
-                }
-            }
-        };
-        document.getElementById("btnJouer").addEventListener("click", function () {
-            wordle.pigerMot();
-        })
-        document.getElementById("btnEvaluer").addEventListener("click", function () {
-            wordle.evaluerMot(document.getElementById("champMot").value);
-        })
-    </script>
+            </fieldset>
+        </form>
+        <aside>
+            <h2> Code couleur</h2>
+            <!-- dl>(dt+dd)*3 -->
+            <dl>
+                <dt class="jaune">Jaune</dt>
+                <dd>La lettre existe dans le mot mais elle n'est pas bien placée</dd>
+                <dt class="vert">Vert</dt>
+                <dd>La lettre coincide parfaitement</dd>
+                <dt class="gris">Gris</dt>
+                <dd>La lettre est absente du mot pigé au hasard</dd>
+            </dl>
+        </aside>
+        <section class="mastermind">
+            <h2>Résultats</h2>
+            <!-- ol>(li.mot#mot$>span*5)*6 -->
+            <ol>
+                <li id="mot1"><p class="mot"><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span></p></li>
+                <li id="mot2"><p class="mot"><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span></p></li>
+                <li id="mot3"><p class="mot"><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span></p></li>
+                <li id="mot4"><p class="mot"><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span></p></li>
+                <li id="mot5"><p class="mot"><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span></p></li>
+                <li id="mot6"><p class="mot"><span>_</span><span>_</span><span>_</span><span>_</span><span>_</span></p></li>
+            </ol>
+        </section>
+    </main>
+    <script src="app.js"></script>
 </body>
 
 </html>
