@@ -104,6 +104,7 @@ let wordle = {
         document.getElementById("nombreEssai").innerText = ""
         document.getElementById("consigne").className = "";
         this.intNombreEssai = 0; 
+        this.pigerMot();
     }
 
 };
