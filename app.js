@@ -1,6 +1,7 @@
 /** WORDLE version TIMCSF
  *  à la suite du "bonhomme pendu" de Michelle Decorte... ;)
  * @author Ève Février, efevrier@csfoy.ca
+ * @todo optimiser l'algorithme!
  * @todo DES TONNES d'améliorations possibles. FAITES VOS SUGGESTIONS!!!
  * Exemple: ajouter des niveaux de difficultés selon la liste utilisée (faire une liste facile avec des mots très courants...)
  * */
@@ -30,6 +31,7 @@ let wordle = {
         document.getElementById("btnJouer").className = "";
         document.getElementById("btnJouer").disabled = true; 
         afficherCacher("etape2", false);
+         
         // Tirer au sort le mot
         let intNombreHasard = Math.floor(Math.random() * this.arrMots.length);
         this.strMotHasard = this.arrMots[intNombreHasard];
@@ -104,7 +106,12 @@ let wordle = {
         document.getElementById("nombreEssai").innerText = ""
         document.getElementById("consigne").className = "";
         this.intNombreEssai = 0; 
-        this.pigerMot();
+
+        // Gérer l'état des boutons
+    document.getElementById("btnJouer").className = "animate animate__jello";
+        document.getElementById("btnJouer").disabled = false; 
+        document.getElementById("btnReset").disabled = true; 
+        afficherCacher("etape2", true);
     }
 
 };
