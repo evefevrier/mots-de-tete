@@ -4,6 +4,7 @@
  * @todo optimiser l'algorithme!
  * @todo DES TONNES d'améliorations possibles. FAITES VOS SUGGESTIONS!!!
  * Exemple: ajouter des niveaux de difficultés selon la liste utilisée (faire une liste facile avec des mots très courants...)
+ * Exemple: ajouter un bouton aide qui fournit un indice pour chaque mot (modifier en conséquence la structure de données)
  * */
 
 function afficherCacher(strId, blnIsHidden){
@@ -134,3 +135,4 @@ document.getElementById("btnEvaluer").addEventListener("click", function () {
 document.getElementById("btnReset").addEventListener("click", function () {
     wordle.reset();
 })
+ 
