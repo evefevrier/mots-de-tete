@@ -19,11 +19,11 @@ let wordle = {
         // sous quelle forme conserver la liste de mots, minimum 50, renouvelables?
         // fichier json fetché ...
         this.arrMots = new Array("mambo", "tango", "revue", "ravin", "rival", "zumba", "souks", "wagon",
-            "avion",
+            "avion", "fusée", "gaffe", "galon", "gamin", "gaver", "gecko", "gnome", "guepe",
             "fleur", "bisou", "bazou", "bebop", "bécot", "biche", "filin", "filet", "filou",
-            "fluet",
+            "fluet", "hache", "haine", "amour", "groin", "gueri", "guide", 
             "franc", "forêt", "habit", "grief", "gruau", "drone", "école", "ruche", "duvet",
-            "dunes",
+            "dunes", "heure", "huard", "hurle", "idéal", "idole", "igloo", "houle", "hippy", "hydre","hyène",
             "fable", "exclu", "exact", "lever", "ligne", "libre", "nocif", "noces", "niqab")
 
     },
@@ -135,4 +135,10 @@ document.getElementById("btnEvaluer").addEventListener("click", function () {
 document.getElementById("btnReset").addEventListener("click", function () {
     wordle.reset();
 })
+// choix de remplacer <form> par div.form plutôt que:
+/* document.getElementById("champMot").addEventListener("keyup", function(objEvenement){
+    if(objEvenement.key == "Enter"){
+        objEvenement.preventDefault();
+    }
+}) */
  

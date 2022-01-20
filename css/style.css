@@ -98,7 +98,7 @@ main {
 }
 
 aside,
-form,
+.form,
 .mastermind {
     padding: 1em;
 }
@@ -108,7 +108,7 @@ aside {
     flex-basis: 30%
 }
 
-form {
+.form {
     flex-basis: 40%
 }
 
