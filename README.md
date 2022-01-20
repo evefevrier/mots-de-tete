@@ -3,4 +3,6 @@
 
 [Mots de tête sur Github Pages](https://evefevrier.github.io/wordle/)
 
+Code de triche : ouvrir la console...
+
 Version 1.0b réalisée les 15 et 16 janvier 2022
