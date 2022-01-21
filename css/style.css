@@ -76,9 +76,15 @@ label[for='champMot'] {
 
 main {
     display: flex; 
+    flex-direction: column;
     width: 90%;
     margin: auto;
 } 
+@media (min-width:700px) {
+    main {
+        flex-direction: row;
+    }   
+}
 .entrerUnMot p{
     display: flex;  
     justify-content: space-between;
@@ -103,9 +109,14 @@ aside,
     padding: 1em;
 }
 
-aside {
-    order: -1;
+aside { 
+    order: 1;
     flex-basis: 30%
+}
+@media (min-width:700px) {
+   aside {
+        order: -1;
+    }   
 }
 
 .form {
