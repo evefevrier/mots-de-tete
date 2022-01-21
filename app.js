@@ -1,10 +1,11 @@
 /** WORDLE version TIMCSF
  *  à la suite du "bonhomme pendu" de Michelle Decorte... ;)
  * @author Ève Février, efevrier@csfoy.ca
- * @todo optimiser l'algorithme!
- * @todo DES TONNES d'améliorations possibles. FAITES VOS SUGGESTIONS!!!
- * Exemple: ajouter des niveaux de difficultés selon la liste utilisée (faire une liste facile avec des mots très courants...)
- * Exemple: ajouter un bouton aide qui fournit un indice pour chaque mot (modifier en conséquence la structure de données)
+ * @todo DES TONNES d'améliorations possibles... FAITES VOS SUGGESTIONS!!!
+ * (0) optimiser l'algorithme!
+ * (1) ajouter des niveaux de difficultés selon la liste utilisée (faire une liste facile avec des mots très courants...)
+ * (2) ajouter un bouton aide qui fournit un indice pour chaque mot (modifier en conséquence la structure de données)
+ * (3) ajouter des animations de transition lorsqu'on Rejoue
  * */
 
 function afficherCacher(strId, blnIsHidden){
@@ -89,6 +90,7 @@ let wordle = {
             }
             if (strMessage != "&nbsp;") {
                 document.getElementById("btnReset").disabled = false;
+                document.getElementById("btnReset").className = "animate animate__jello";
             }
             document.getElementById("message").innerHTML = strMessage;
 
@@ -109,9 +111,10 @@ let wordle = {
         this.intNombreEssai = 0; 
 
         // Gérer l'état des boutons
-    document.getElementById("btnJouer").className = "animate animate__jello";
+        document.getElementById("btnJouer").className = "animate animate__jello";
         document.getElementById("btnJouer").disabled = false; 
-        document.getElementById("btnReset").disabled = true; 
+        document.getElementById("btnReset").disabled = true;
+        document.getElementById("btnReset").className = ""; 
         afficherCacher("etape2", true);
     }
 
