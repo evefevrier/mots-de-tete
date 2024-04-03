@@ -13,34 +13,26 @@ function afficherCacher(strId, blnIsHidden){
 }
 
 let wordle = {
-    arrMots: null,
     strMotHasard: null,
     intNombreEssai: 0,
-    getDictionary: function () {
-        // sous quelle forme conserver la liste de mots, minimum 50, renouvelables?
-        // fichier json fetché ...
-        this.arrMots = new Array("mambo", "tango", "revue", "ravin", "rival", "zumba", "souks", "wagon",
-            "avion", "fusée", "gaffe", "galon", "gamin", "gaver", "gecko", "gnome", "guepe",
-            "fleur", "bisou", "bazou", "bebop", "bécot", "biche", "filin", "filet", "filou",
-            "fluet", "hache", "haine", "amour", "groin", "gueri", "guide", 
-            "franc", "forêt", "habit", "grief", "gruau", "drone", "école", "ruche", "duvet",
-            "dunes", "heure", "huard", "hurle", "idéal", "idole", "igloo", "houle", "hippy", "hydre","hyène",
-            "fable", "exclu", "exact", "lever", "ligne", "libre", "nocif", "noces", "niqab")
-
+    getMotAleatoire: async function () {
+        try {
+            const response = await fetch("https://api.dicolink.com/v1/mots/motauhasard?avecdef=true&minlong=5&maxlong=5&verbeconjugue=false&api_key=vIZN5M213LnPy5M8isceExH5sYNBg35h");
+            const data = await response.json();
+            this.strMotHasard = data[0].mot;
+            console.log(this.strMotHasard);
+        } catch (error) {
+            console.error("Erreur lors de la récupération du mot aléatoire :", error);
+        }
     },
-    pigerMot: function () {
-        // Gérer l'état des boutons
+    pigerMot: async function () {
         document.getElementById("btnJouer").className = "";
         document.getElementById("btnJouer").disabled = true; 
         afficherCacher("etape2", false);
          
-        // Tirer au sort le mot
-        let intNombreHasard = Math.floor(Math.random() * this.arrMots.length);
-        this.strMotHasard = this.arrMots[intNombreHasard];
-        console.log(this.strMotHasard);
-        /* @todo ANIMER la phrase "Vous avez 6 essais pour deviner (par déduction) le mot de 5 lettres." 
-         * ma première idée serait de faire une petite vague invitante
-         */
+        await this.getMotAleatoire();
+        
+        document.getElementById("consigne").innerText = "Vous avez 6 essais pour deviner le mot de 5 lettres"
         document.getElementById("consigne").className = "animate animate__pulse";
     },
     evaluerMot: function (strMotAEvaluer) {
@@ -123,9 +115,6 @@ let wordle = {
 // utiliser DOMContentLoaded plutôt que load
 // https://developer.mozilla.org/fr/docs/Web/API/Window/DOMContentLoaded_event
 window.addEventListener("DOMContentLoaded", function () {
-    wordle.getDictionary();
-})
-window.addEventListener("load", function () {
     document.getElementById("btnJouer").className = "animate animate__jello";
 })
 document.getElementById("btnJouer").addEventListener("click", function () {
